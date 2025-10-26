@@ -2,7 +2,7 @@ import axios from 'axios';
 import { refreshTokens } from './auth';
 
 export const apiClient = axios.create({
-	// baseURL: , env.vite
+	// baseURL: env.base_url
 	headers: {
 		'Content-Type': 'application/json',
 	},

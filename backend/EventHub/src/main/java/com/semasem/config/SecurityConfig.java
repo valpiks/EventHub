@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,43 +34,45 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // ← ИСПРАВЛЕНО: убрал лишнюю скобку
                 .csrf(csrf -> csrf.disable())
                 .headers(headers ->
-                        headers.frameOptions(frameOptions -> frameOptions.sameOrigin()
-                        ))
+                        headers.frameOptions(frameOptions -> frameOptions.sameOrigin())
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtService, userDetailsService),
                         UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/auth/login",
-                                "/api/auth/register",
-                                "/api/auth/verify-email",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/error",
-                                "/api/rooms/**"
-                        ).permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/auth/logout", "/api/auth/new-password").authenticated()
-                        .requestMatchers("/api/user/**").authenticated()
-//                        .requestMatchers("/api/rooms/**").authenticated()
-                        .anyRequest().permitAll()
+                                .requestMatchers(
+                                        "/api/auth/login",
+                                        "/api/auth/register",
+                                        "/api/auth/verify-email",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/error",
+                                        "/api/rooms/**"
+                                ).permitAll()
+                                .requestMatchers("/h2-console/**").permitAll()
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/auth/logout", "/api/auth/new-password").authenticated()
+                                .requestMatchers("/api/user/**").authenticated()
+//                  .requestMatchers("/api/rooms/**").authenticated()  // ← закомментировано, т.к. выше уже есть permitAll()
+                                .anyRequest().permitAll()
                 );
 
-
-        return http.build();
+        return http.build();  // ← НЕ ЗАБУДЬ ДОБАВИТЬ ЭТУ СТРОЧКУ!
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // ИСПРАВЛЕНИЕ: используй allowedOriginPatterns вместо allowedOrigins
+        configuration.setAllowedOriginPatterns(List.of("*"));
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(true); // оставляем true
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
