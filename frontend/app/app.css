@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		/* Основные цвета */
+		--background: #ffffff; /* Белый */
+		--foreground: #2a211f; /* Темно-коричневый */
+
+		/* Карточки */
+		--card: #ffffff;
+		--card-foreground: #2a211f;
+
+		/* Поповеры */
+		--popover: #ffffff;
+		--popover-foreground: #2a211f;
+
+		/* Основной цвет (оранжевый) */
+		--primary: #ff6b00; /* Яркий оранжевый */
+		--primary-foreground: #ffffff;
+		--primary-glow: #ff8c33; /* Более светлый оранжевый */
+
+		/* Вторичный */
+		--secondary: #fff5f0; /* Очень светлый оранжевый */
+		--secondary-foreground: #2a211f;
+
+		/* Приглушенные */
+		--muted: #fdf6f0; /* Светлый персиковый */
+		--muted-foreground: #8a7b76; /* Серо-коричневый */
+
+		/* Акцент */
+		--accent: #e65c00; /* Темно-оранжевый */
+		--accent-foreground: #ffffff;
+
+		/* Ошибки */
+		--destructive: #dc2626; /* Красный */
+		--destructive-foreground: #ffffff;
+
+		/* Границы и инпуты */
+		--border: #f0e6e0; /* Светлый бежевый */
+		--input: #f0e6e0;
+		--ring: #ff6b00;
+
+		/* Скругления */
+		--radius: 0.75rem;
+
+		/* Градиенты */
+		--gradient-primary: linear-gradient(135deg, #ff6b00, #e65c00);
+		--gradient-hero: linear-gradient(180deg, #ffffff, #fff5f0);
+
+		/* Тени */
+		--shadow-glow: 0 10px 40px -10px rgba(255, 107, 0, 0.25);
+		--shadow-card: 0 4px 20px -4px rgba(255, 107, 0, 0.1);
+
+		/* Сайдбар */
+		--sidebar-background: #fffaf5; /* Очень светлый оранжевый */
+		--sidebar-foreground: #3d2f2a; /* Темно-коричневый */
+		--sidebar-primary: #ff6b00;
+		--sidebar-primary-foreground: #ffffff;
+		--sidebar-accent: #fff5f0;
+		--sidebar-accent-foreground: #2a211f;
+		--sidebar-border: #f0e6e0;
+		--sidebar-ring: #ff6b00;
+	}
+
+	.dark {
+		/* Темная тема */
+		--background: #1a1412; /* Очень темный коричневый */
+		--foreground: #f7f2ef; /* Светлый кремовый */
+
+		--card: #221a18; /* Темный коричневый */
+		--card-foreground: #f7f2ef;
+
+		--popover: #221a18;
+		--popover-foreground: #f7f2ef;
+
+		/* Основной цвет остается оранжевым */
+		--primary: #ff6b00;
+		--primary-foreground: #ffffff;
+		--primary-glow: #ff8c33;
+
+		--secondary: #2a211f; /* Темный коричневый */
+		--secondary-foreground: #f7f2ef;
+
+		--muted: #2e2421; /* Темный серо-коричневый */
+		--muted-foreground: #c4b5ae; /* Серо-бежевый */
+
+		--accent: #e65c00;
+		--accent-foreground: #ffffff;
+
+		--destructive: #dc2626;
+		--destructive-foreground: #ffffff;
+
+		--border: #3d2f2a; /* Темно-коричневый */
+		--input: #3d2f2a;
+		--ring: #ff6b00;
+
+		/* Градиенты для темной темы */
+		--gradient-primary: linear-gradient(135deg, #ff6b00, #e65c00);
+		--gradient-hero: linear-gradient(180deg, #1a1412, #221a18);
+
+		/* Тени для темной темы */
+		--shadow-glow: 0 10px 40px -10px rgba(255, 107, 0, 0.35);
+		--shadow-card: 0 4px 20px -4px rgba(255, 107, 0, 0.15);
+
+		/* Сайдбар в темной теме */
+		--sidebar-background: #1e1614; /* Темный коричневый */
+		--sidebar-foreground: #f7f2ef;
+		--sidebar-primary: #ff6b00;
+		--sidebar-primary-foreground: #ffffff;
+		--sidebar-accent: #2e2421;
+		--sidebar-accent-foreground: #f7f2ef;
+		--sidebar-border: #3d2f2a;
+		--sidebar-ring: #ff6b00;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+}
